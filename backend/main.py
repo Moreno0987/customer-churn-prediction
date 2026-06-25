@@ -6,12 +6,13 @@ import joblib
 
 app = FastAPI(title="Customer Churn Prediction API")
 
-# Izinkan frontend Next.js mengakses backend FastAPI
+# Izinkan frontend lokal dan Vercel mengakses backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "https://customer-churn-prediction-pg7s.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -45,7 +46,9 @@ class CustomerData(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message": "Customer Churn Prediction API is running"}
+    return {
+        "message": "Customer Churn Prediction API is running"
+    }
 
 
 @app.post("/predict")
